@@ -1,0 +1,17 @@
+{
+  "name": "reactapp",
+  "version": "1.0.0",
+  "author": "Clsrfish",
+  "description": "react application scaffold",
+  "keywords": [],
+  "license": "ISC",
+  "main": "./index.tsx",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "dev": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack.config.dev.babel.js --display-error-details --progress --colors --open 'Google Chrome'",
+    "build": "npm run lint && ./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --config ./webpack.config.prod.babel.js --display-error-details --progress --colors",
+    "lint": "./node_modules/eslint/bin/eslint.js -c .eslintrc.json --ignore-path .eslintignore --fix --color .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

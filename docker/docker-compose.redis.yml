@@ -1,0 +1,13 @@
+version: "3"
+services:
+    redis:
+        image: redis:5-alpine
+        container_name: redis_docker
+        labels:
+            - "maintainer=xinliugm@gmail.com"
+        ports:
+            - 6379:6379
+        environment:
+            - TZ=Asia/Shanghai
+        volumes:
+            - ./data:/data

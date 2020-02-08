@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+    labels:
+      - "Maintainer:xinliugm@gmail.com"
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - TZ=Asia/Shanghai
+      - GO_ENV=PROD
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo:4.1
+    labels:
+      - "maintainer=xinliugm@gmail.com"
+    expose:
+      - 27017
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./mongo/db:/data/db
+      - ./mongo/configdb:/data/configdb
+      - ./mongo/log:/data/log
+
+  redis:
+    image: redis:5-alpine
+    user: root
+    labels:
+      - "maintainer=xinliugm@gmail.com"
+    expose:
+      - 6379
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./redis:/data

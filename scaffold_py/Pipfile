@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+yapf = "*"
+
+[packages]
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+main = "python3 main.py"
+main_f = "env PYTHONHOME=$VIRTUAL_ENV /usr/local/bin/python3 main.py"
