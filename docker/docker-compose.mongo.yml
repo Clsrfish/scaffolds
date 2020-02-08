@@ -1,0 +1,16 @@
+version: "3"
+services:
+    mongo:
+        image: mongo:4.1
+        container_name: mongo_docker
+        labels:
+            - "maintainer=xinkiugm@gmail.com"
+        ports: 
+            - 27017:27017
+        environment:
+            - TZ=Asia/Shanghai
+        volumes:
+#            - /etc/localtime:/etc/localtime:ro
+            - ./data/db:/data/db
+            - ./data/configdb:/data/configdb
+            - ./data/log:/data/log

@@ -1,0 +1,15 @@
+.git/
+.DS_Store
+.vscode/
+mongo/
+redis/
+src/routers.json
+
+.dockerignore
+.gitignore
+app.sh
+docker-compose.yml
+Dockerfile
+LICENSE
+nginx.conf
+README.md

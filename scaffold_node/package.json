@@ -1,0 +1,16 @@
+{
+  "name": "nodeapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "dev": "./node_modules/.bin/ts-node -T ./src/index.ts",
+    "build": "./node_modules/webpack/bin/webpack.js --config ./webpack.config.babel.js --display-error-details --progress --colors",
+    "lint": "./node_modules/eslint/bin/eslint.js -c .eslintrc.json --ignore-path .eslintignore --fix --color src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
