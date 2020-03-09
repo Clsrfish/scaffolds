@@ -39,7 +39,6 @@ dev_deps=(
     eslint-plugin-import
     eslint-plugin-jsx-a11y
     eslint-plugin-react
-    eslint-plugin-typescript
     @typescript-eslint/eslint-plugin
     @typescript-eslint/parser
     babel-eslint
