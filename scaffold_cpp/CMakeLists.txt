@@ -1,25 +1,35 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(demo VERSION 0.1.0)
 
-# invalid argument '-std=c++11' not allowed with 'C'
-# add_definitions(-std=c++11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# configure_file (
-#   "${PROJECT_SOURCE_DIR}/config.h.in"
-#   "${PROJECT_BINARY_DIR}/config.h"
-#   )
+configure_file (
+  ${PROJECT_SOURCE_DIR}/config.h.in
+  ${PROJECT_BINARY_DIR}/config.h
+)
 
-include(CTest)
-enable_testing()
-
-include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
-link_directories(${CMAKE_CURRENT_LIST_DIR}/lib)
+include_directories(
+    ${CMAKE_CURRENT_LIST_DIR}/include
+    /usr/local/include
+)
+link_directories(
+    ${CMAKE_CURRENT_LIST_DIR}/lib
+    /usr/local/lib
+)
 
 add_subdirectory(src)
-aux_source_directory(. DIR_SRC)
-add_executable(main ${DIR_SRC})
+
+add_executable(main main.cpp)
+target_include_directories(
+    main PUBLIC
+    ${PROJECT_BINARY_DIR}
+)
 target_link_libraries(main src)
+
+# Test case 
+include(CTest)
+enable_testing()
 
 # build package installer start
 include (InstallRequiredSystemLibraries)
