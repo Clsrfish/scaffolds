@@ -15,6 +15,16 @@ function pbcopyfile() {
     if [ $(uname) != "Darwin" ]; then
         echo "$(uname) not supported"
         exit 1
+    elif [ ! -f "${1}" ]; then
+        echo "No such file or directory: ${1}"
+        exit 1
     fi
-    osascript -e 'on run args' -e 'set the clipboard to POSIX file (first item of args)' -e end "$@"
+    file_to_copy=$(
+        cd $(dirname "$1")
+        pwd -P
+    )/$(basename "$1")
+    osascript -e 'on run args' \
+        -e 'set the clipboard to POSIX file (first item of args)' \
+        -e 'return the clipboard' \
+        -e end ${file_to_copy}
 }
