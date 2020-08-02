@@ -133,9 +133,33 @@ function adb_cap_pb() {
 
 function adb_install() {
     any_device
-    for did in $(adb_device_serials); do
-        echo "Installing ${1} on ${did}"
-        adb -s ${did} install -r "${1}"
+
+    if [ ! -f "${1}" ]; then
+        echo "No such file or directory: ${1}"
+        exit 1
+    fi
+
+    aapt2=${ANDROID_HOME}/build-tools/$(ls ${ANDROID_HOME}/build-tools | tail -n1)/aapt2
+
+    for serial in $(adb_device_serials); do
+        echo "Installing ${1} on ${serial}"
+        if [ -f "${aapt2}" ]; then
+            package_name=$(${aapt2} dump packagename ${1})
+            version_code=$(${aapt2} dump badging ${1} | grep versionCode | awk '{print $3}' | awk -F \' '{print $2}')
+            installed_version_code=$(adb shell dumpsys package ${package_name} | grep versionCode | awk '{print $1}' | awk -F = '{print $2}')
+            installed_version_code=${installed_version_code:-0}
+            if [ $((installed_version_code - version_code)) -gt 0 ]; then
+                echo "INSTALL_FAILED_VERSION_DOWNGRADE, uninstalling existing package"
+                adb -s ${serial} uninstall ${package_name} >/dev/null 2>&1
+            fi
+        fi
+        adb -s ${serial} install -r -t -d "${1}"
+        if [ -f "${aapt2}" ]; then
+            echo "Launching application..."
+            package_name=$(${aapt2} dump packagename ${1})
+            activity_name=$(${aapt2} dump badging ${1} | grep 'launchable-activity' | awk '{print $2}' | awk -F \' '{print $2}')
+            adb -s ${serial} shell am start -n ${package_name}/${activity_name}
+        fi
     done
 }
 
@@ -153,4 +177,8 @@ function adb_fix_inspector() {
     for serial in $(adb_device_serials); do
         adb -s ${serial} shell settings delete global debug_view_attributes
     done
+}
+
+function adb_kill() {
+    ps -A | grep adb | awk '{if(NR==1){print $1}}' | xargs kill -9
 }
