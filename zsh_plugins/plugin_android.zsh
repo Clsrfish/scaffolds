@@ -136,7 +136,7 @@ function adb_install() {
 
     if [ ! -f "${1}" ]; then
         echo "No such file or directory: ${1}"
-        exit 1
+        return 1
     fi
 
     aapt2=${ANDROID_HOME}/build-tools/$(ls ${ANDROID_HOME}/build-tools | tail -n1)/aapt2
@@ -148,8 +148,9 @@ function adb_install() {
             version_code=$(${aapt2} dump badging ${1} | grep versionCode | awk '{print $3}' | awk -F \' '{print $2}')
             installed_version_code=$(adb shell dumpsys package ${package_name} | grep versionCode | awk '{print $1}' | awk -F = '{print $2}')
             installed_version_code=${installed_version_code:-0}
+
             if [ $((installed_version_code - version_code)) -gt 0 ]; then
-                echo "INSTALL_FAILED_VERSION_DOWNGRADE, uninstalling existing package"
+                echo "INSTALL_FAILED_VERSION_DOWNGRADE[${installed_version_code}->${version_code}], uninstalling existing package"
                 adb -s ${serial} uninstall ${package_name} >/dev/null 2>&1
             fi
         fi
