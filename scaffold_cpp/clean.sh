@@ -1,8 +1,8 @@
 #!/bin/sh
-cdir=`pwd`
+cdir=$(pwd)
 
-pdir=`dirname "${0}"`
-cd ${pdir}/build 
-rm -r `ls -A | grep -v '.gitkeep'`
+pdir=$(dirname "${0}")
+cd ${pdir}/build
+rm -rfv $(ls -A | grep -v '.gitkeep')
 
 cd ${cdir}

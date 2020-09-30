@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(demo VERSION 0.1.0)
+project(demo VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -10,13 +10,22 @@ configure_file (
 )
 
 include_directories(
-    ${CMAKE_CURRENT_LIST_DIR}/include
     /usr/local/include
+    ${PROJECT_BINARY_DIR}
 )
 link_directories(
-    ${CMAKE_CURRENT_LIST_DIR}/lib
     /usr/local/lib
+    ${PROJECT_BINARY_DIR}
 )
+
+# add_library(ur_lib
+#     SHARED
+#     IMPORTED
+# )
+# set_target_properties(ur_lib 
+#     PROPERTIES 
+#     IMPORTED_LOCATION 
+#     ${PROJECT_SOURCE_DIR}/path/to/ur_lib)
 
 add_subdirectory(src)
 
