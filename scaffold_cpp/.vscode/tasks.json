@@ -6,11 +6,31 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "cd build && cmake ../ && make"
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "shared",
+            },
+            "command": "cmake --log-level=VERBOSE -Wdev -DCMAKE_BUILD_TYPE=Debug -S . -B build && make -d -C build"
+        },
+        {
+            "label": "dependencies",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "shared",
+            },
+            "command": "sh dependencies.sh"
         },
         {
             "label": "cpack",
             "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "shared",
+            },
             "command": "cd build && cmake ../ && cpack --config CPackConfig.cmake"
         }
     ]

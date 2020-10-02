@@ -1,6 +1,6 @@
 #include <iostream>
-
+#include "./utils/log.h"
 void hello()
 {
-    std::cout << "hello world!" << std::endl;
+    LOG_I("hello world!");
 }
