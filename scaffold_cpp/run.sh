@@ -3,10 +3,11 @@
 if [ ! -d build ]; then
     echo "-- Build directory not exists"
 fi
+if [ -f ./build/main ]; then
+    rm ./build/main
+fi
 
-cd build
-
-cmake ../
+cmake --log-level=VERBOSE -Wdev -DCMAKE_BUILD_TYPE=Debug -S . -B build
 
 if [ $(uname) == "Linux" ]; then
     cpu_core=$(nproc)
@@ -18,6 +19,7 @@ else
 fi
 echo "-- CPU core: $cpu_core"
 
-make -j${cpu_core}
+make -d -j${cpu_core} -C build
 
-./main
+echo "-- Launching main"
+./build/main

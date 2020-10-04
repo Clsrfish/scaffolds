@@ -135,6 +135,11 @@ function convert_80_video() {
     ffmpeg -i ${1}/80/video.m4s -i ${1}/80/audio.m4s -vcodec copy -acodec copy "${TARGET_CACHE}_output/${2}_${CURRENT_VIDEO_PART_TITLE}.mp4"
     return 0
 }
+function convert_64_video() {
+    echo "Converting 64 file type."
+    ffmpeg -i ${1}/64/video.m4s -i ${1}/64/audio.m4s -vcodec copy -acodec copy "${TARGET_CACHE}_output/${2}_${CURRENT_VIDEO_PART_TITLE}.mp4"
+    return 0
+}
 
 # TODO: cnvert danmaku.xml to ass
 function convert_danmaku_2_ass() {
@@ -170,9 +175,12 @@ for entry in $(cat ${TARGET_CACHE}/${CACHE_ENTRY_FILE}); do
     elif [[ ${CURRENT_VIDEO_TYPE_TAG} == ${VIDEO_TYPE_80} ]]; then
         # 80
         convert_80_video ${TARGET_CACHE}/${entry} ${entry_prefix}
+    elif [[ ${CURRENT_VIDEO_TYPE_TAG} == "64" ]]; then
+        # 64
+        convert_64_video ${TARGET_CACHE}/${entry} ${entry_prefix}
     else
         # not supported
-        echo "Not supported cache format."
+        echo "Not supported cache format. ${CURRENT_VIDEO_TYPE_TAG}"
         break
     fi
     echo ""

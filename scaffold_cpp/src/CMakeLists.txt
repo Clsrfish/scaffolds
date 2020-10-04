@@ -1,6 +1,6 @@
 add_subdirectory(utils)
 
-aux_source_directory(. DIR_LIB_SRC)
+aux_source_directory(. SRC)
 
-add_library (src ${DIR_LIB_SRC})
-target_link_libraries(src lib_utils)
+add_library (src ${SRC})
+target_link_libraries(src utils)
