@@ -29,12 +29,12 @@ link_directories(
 
 add_subdirectory(src)
 
-add_executable(main main.cpp)
+add_executable(${PROJECT_NAME} main.cpp)
 target_include_directories(
-    main PUBLIC
+    ${PROJECT_NAME} PUBLIC
     ${PROJECT_BINARY_DIR}
 )
-target_link_libraries(main src)
+target_link_libraries(${PROJECT_NAME} src)
 
 # Test case 
 include(CTest)

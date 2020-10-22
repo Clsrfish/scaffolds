@@ -1,10 +1,11 @@
 #!/bin/bash
 
+program=demo
 if [ ! -d build ]; then
     echo "-- Build directory not exists"
 fi
-if [ -f ./build/main ]; then
-    rm ./build/main
+if [ -f ./build/${program} ]; then
+    rm ./build/${program}
 fi
 
 cmake --log-level=VERBOSE -Wdev -DCMAKE_BUILD_TYPE=Debug -S . -B build
@@ -22,4 +23,4 @@ echo "-- CPU core: $cpu_core"
 make -d -j${cpu_core} -C build
 
 echo "-- Launching main"
-./build/main
+./build/${program}
