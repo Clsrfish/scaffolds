@@ -28,3 +28,23 @@ function pbcopyfile() {
         -e 'return the clipboard' \
         -e end ${file_to_copy}
 }
+
+function webp_cvr() {
+    local suffix=${1}
+    if [ -z ${suffix} ]; then
+        echo "Invlaid suffix: ${suffix}"
+        return 1
+    fi
+
+    local lower_suffix=$(echo "${suffix}" | awk '{print tolower($0)}')
+    for img in $(find ./ -iname "*.${suffix}"); do
+        if [ ${lower_suffix} = "gif" ]; then
+            gif2webp -v -q 100 ${img} -o ${img%.*}.webp
+        elif [ ${lower_suffix} = "png" ] || [ ${lower_suffix} = "jpg" ] || [ ${lower_suffix} = "jpeg" ]; then
+            cwebp -v -progress -q 100 ${img} -o ${img%.*}.webp
+        else
+            echo "${img} not supported"
+        fi
+    done
+
+}
