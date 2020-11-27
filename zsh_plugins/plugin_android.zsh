@@ -25,7 +25,7 @@ function any_device() {
     count=$(adb_device_count)
     if [ ${count} -le 0 ]; then
         echo "No device is connected"
-        exit 1
+        return 1
     fi
 }
 
@@ -33,12 +33,12 @@ function any_device() {
 function convert_path_for_serial() {
     if [ -z ${1} ]; then
         echo "Output path required"
-        exit 1
+        return 1
     fi
 
     if [ -z ${2} ]; then
         echo "Device serial required"
-        exit 1
+        return 1
     fi
 
     file_name=${1##*/}
@@ -52,7 +52,7 @@ function convert_path_for_serial() {
         echo "Creating directory ${output_path}"
         mkdir -p ${output_path}
         if [ $? -ne 0 ]; then
-            exit 1
+            return 1
         fi
     fi
 
@@ -85,7 +85,7 @@ function adb_cap() {
 
     if [ -z ${1} ]; then
         echo "Output path required"
-        exit 1
+        return 1
     fi
 
     for serial in $(adb_device_serials); do
