@@ -183,3 +183,16 @@ function adb_fix_inspector() {
 function adb_kill() {
     ps -A | grep adb | awk '{if(NR==1){print $1}}' | xargs kill -9
 }
+
+function adb_test_schema() {
+    schema=${1}
+    if [[ -z ${schema} ]]; then
+        echo "schema is empty!"
+        return 1
+    fi
+    any_device
+    for serial in $(adb_device_serials); do
+        adb -s ${serial} shell am start -W -a android.intent.action.VIEW -d ${schema}
+    done
+
+}
