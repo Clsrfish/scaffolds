@@ -148,6 +148,8 @@ function adb_install() {
             version_code=$(${aapt2} dump badging ${1} | grep versionCode | awk '{print $3}' | awk -F \' '{print $2}')
             installed_version_code=$(adb shell dumpsys package ${package_name} | grep versionCode | awk '{print $1}' | awk -F = '{print $2}')
             installed_version_code=${installed_version_code:-0}
+            echo "Package name: ${package_name}"
+            echo "Manifest version code: ${version_code}"
 
             if [ $((installed_version_code - version_code)) -gt 0 ]; then
                 echo "INSTALL_FAILED_VERSION_DOWNGRADE[${installed_version_code}->${version_code}], uninstalling existing package"
