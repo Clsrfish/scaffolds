@@ -3,6 +3,7 @@ project(demo VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 configure_file (
   ${PROJECT_SOURCE_DIR}/config.h.in
