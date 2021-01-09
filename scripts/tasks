@@ -1,0 +1,3 @@
+0 11,19 * * * ~/QuickLaunch/scripts/upgrade.sh
+*/30 7-23 * * * ~/QuickLaunch/scripts/drink.sh
+0 23 * * * ~/QuickLaunch/scripts/rest.sh 
