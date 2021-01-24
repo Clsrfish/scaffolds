@@ -1,5 +1,5 @@
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 
 #if !defined(LOG_H)
@@ -38,16 +38,14 @@
 // https://stackoverflow.com/questions/1639797/template-issue-causes-linker-error-c
 // https://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 template <typename... Args>
-std::string string_format(const std::string &format, Args... args)
-{
-    size_t size = snprintf(nullptr, 0, format.c_str(), args...) + 1; // Extra space for '\0'
-    if (size <= 0)
-    {
+std::string string_format(const std::string &format, Args... args) {
+    size_t size = snprintf(nullptr, 0, format.c_str(), args...) + 1;  // Extra space for '\0'
+    if (size <= 0) {
         throw std::runtime_error("Error during formatting.");
     }
     std::unique_ptr<char[]> buf(new char[size]);
     snprintf(buf.get(), size, format.c_str(), args...);
-    return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
+    return std::string(buf.get(), buf.get() + size - 1);  // We don't want the '\0' inside
 }
 #define WIDTH 4
 
@@ -63,4 +61,4 @@ std::string string_format(const std::string &format, Args... args)
 #define LOG_E(FORMAT, ...) \
     std::cerr << BOLDRED << std::left << std::setw(WIDTH) << std::setfill(' ') << "[E]" << RESET << RED << string_format(FORMAT, ##__VA_ARGS__) << RESET << std::endl;
 
-#endif // LOG_H
+#endif  // LOG_H

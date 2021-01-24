@@ -4,34 +4,78 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
-            "type": "shell",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "panel": "shared",
+            "type": "process",
+            "label": "C/C++: cmake debug build",
+            "command": "cmake",
+            "args": [
+                "-g",
+                "-Wdev",
+                "--log-level=VERBOSE",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "--graphviz=dependencies.dot",
+                ".."
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"
             },
-            "command": "cmake --log-level=VERBOSE -Wdev -DCMAKE_BUILD_TYPE=Debug -S . -B build && make -d -C build"
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "clear": true
+            },
+            "detail": "Run cmake debug build"
         },
         {
-            "label": "dependencies",
-            "type": "shell",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "panel": "shared",
+            "type": "process",
+            "label": "C/C++: make",
+            "command": "make",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/build"
             },
-            "command": "sh dependencies.sh"
+            "dependsOn": [
+                "C/C++: cmake debug build"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "clear": false
+            },
+            "detail": "Make the target file"
         },
         {
-            "label": "cpack",
             "type": "shell",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "panel": "shared",
+            "label": "C/C++: show project's dependencies path",
+            "command": "sh dependencies.sh",
+            "options": {
+                "cwd": "${workspaceFolder}"
             },
-            "command": "cd build && cmake ../ && cpack --config CPackConfig.cmake"
+            "dependsOn": [
+                "C/C++: cmake debug build"
+            ],
+            "presentation": {
+                "clear": false
+            },
+            "detail": "Show project's dependencies path"
+        },
+        {
+            "type": "shell",
+            "label": "C/C++ clean project",
+            "command": "for f in $(ls -A | grep -v '.gitkeep');do rm -rv ${f};done",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "presentation": {
+                "clear": false
+            },
+            "detail": "Remove build cache and artifacts"
         }
     ]
 }

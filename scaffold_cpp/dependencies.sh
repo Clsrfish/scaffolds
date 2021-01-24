@@ -1,7 +1,5 @@
 #!/bin/bash
-
-rm build/dependencies.*
-cmake -S . -B build --graphviz=build/dependencies.dot
+pwd
 if [ -f build/dependencies.dot ]; then
     dot -v -Twebp -o build/dependencies.webp build/dependencies.dot
 else
