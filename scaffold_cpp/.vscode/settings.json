@@ -31,5 +31,9 @@
         "ostream": "cpp",
         "memory": "cpp"
     },
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.enhancedColorization": "Disabled",
+    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.formatting": "Disabled",
+    "C_Cpp.intelliSenseEngine": "Disabled"
 }
