@@ -48,3 +48,12 @@ function webp_cvr() {
     done
 
 }
+
+function qrcode() {
+    local content="${1}"
+    if [ -z "${content}" ]; then
+        echo "empty str"
+        return 1
+    fi
+    qrencode "${content}" -o /tmp/qrcode.png && open /tmp/qrcode.png
+}

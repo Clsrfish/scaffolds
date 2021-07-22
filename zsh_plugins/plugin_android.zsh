@@ -7,6 +7,15 @@ alias undebug_gradle="unset GRADLE_OPTS"
 function kill_java_process() {
     jps
     for p in $(jps | grep -v 'Jps' | awk '{print $1}'); do
+        echo "killing ${p}"
+        kill -9 ${p}
+    done
+}
+
+function kill_gradle_daemon() {
+    jps
+    for p in $(jps | grep 'Daemon' | awk '{if (NF>1){print $1}}'); do
+        echo "killing ${p}"
         kill -9 ${p}
     done
 }
@@ -194,7 +203,7 @@ function adb_test_schema() {
     fi
     any_device
     for serial in $(adb_device_serials); do
-        adb -s ${serial} shell am start -W -a android.intent.action.VIEW -d ${schema}
+        adb -s ${serial} shell am start -W -a android.intent.action.VIEW --ez from_notification true -d ${schema}
     done
 
 }
